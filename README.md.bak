@@ -34,6 +34,7 @@ k apply -f nginxpod.yml
 k delete pod --force --grace-priod=0 nginx
 
 
+
 Replicas
 
 
