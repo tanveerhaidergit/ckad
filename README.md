@@ -3,19 +3,19 @@
 # Common Alias
 
 alias k=kubectl </br>
-alias kp='kubectl get po '
-alias kd='kubectl delete po --force --grace-period=0 '
-alias c=clear
+alias kp='kubectl get po' </br>
+alias kd='kubectl delete po --force --grace-period=0 ' </br>
+alias c=clear </br>
 
 # Context and current namespace
 
-k cofig set-context --current --namespace=test
+k cofig set-context --current --namespace=test </br>
 
 
 #Pod
 
-1. k run nginx --image=ngix --restart=Never 
-2. k run nginx --image=ngix --generator=run-pod/v1
+1. k run nginx --image=ngix --restart=Never  </br>
+2. k run nginx --image=ngix --generator=run-pod/v1 </br>
 3. use the yaml file
 
 k run nginx --image=ngix --restart=Never --dry-run -o yaml > nginxpod.yml
@@ -61,10 +61,10 @@ k apply -f webapp-service.yml
 
 ## Run command to create differrent kubernetes objects
 
-k run nginx --image=nginx --restart=Never (Pod)
-k run nginx --image=nginx (Deployment)
-k run nginx --image=nginx --restart=OnFailure (Job)
-k run nginx --image=nginx --restart=OnFailure --schedule='<Cron-expression'> (Cron Job)
+k run nginx --image=nginx --restart=Never (Pod) </br> 
+k run nginx --image=nginx (Deployment) </br>
+k run nginx --image=nginx --restart=OnFailure (Job) </br>
+k run nginx --image=nginx --restart=OnFailure --schedule='<Cron-expression'> (Cron Job) </br>
 
 
 
