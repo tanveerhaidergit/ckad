@@ -2,7 +2,7 @@
 
 # Common Alias
 
-alias k=kubectl
+alias k=kubectl </br>
 alias kp='kubectl get po '
 alias kd='kubectl delete po --force --grace-period=0 '
 alias c=clear
