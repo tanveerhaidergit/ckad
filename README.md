@@ -67,6 +67,111 @@ k run nginx --image=nginx --restart=OnFailure (Job) </br>
 k run nginx --image=nginx --restart=OnFailure --schedule='<Cron-expression'> (Cron Job) </br>
 
 
+Readiness Probe:
+
+Test for true container readiness to receive traffic and signal to Kubernetes when a container reaches this condition.
+
+Each container in a pod can be configured with its own readiness probe, and the pod is not in a ready state until all containers are ready. Different types of probes are available for configuration:
+
+hitting an HTTP endpoint (httpGet)
+checking for a listening TCP port (tcpSocket)
+executing a custom script that exits 0 on success (exec: command: - command - argument)
+spec:
+  containers:
+  - name: app
+    readinessProbe:
+      httpGet:
+        path: /api/ready
+        port: 8080
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      failureThreshold: 8
+
+
+
+httptGet:
+
+readinessProbe:
+   httpGet:
+     path: /api/ready
+     port: 8080
+
+
+TCP test:
+
+readinessProbe:
+ tcpSocket:
+    port: 3306
+
+
+Exec command
+
+readinessProbe:
+ exec:
+   command: 
+      - cat
+      -  /app/ls
+
+
+
+# Liveness Probes
+On a running container, maintain status of a validly running application by configuring liveness probes (livenessProbe) to regularly
+check a container's status. Configuration options are the same as readinessProbe.
+
+Define a liveness command
+
+livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+
+
+livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+        httpHeaders:
+        - name: Custom-Header
+          value: Awesome
+      initialDelaySeconds: 3
+      periodSeconds: 3
+
+
+
+
+#Network Policy
+
+https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/
+
+To limit the access to the nginx service so that only Pods with the label access: true can query it, create a NetworkPolicy 
+object as follow
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: access-nginx
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          access: "true"
+
+
+NetworkPolicy includes a podSelector which selects the grouping of Pods to which the policy applies. You can see this policy selects Pods 
+with the label app=nginx. The label was automatically added to the Pod in the nginx Deployment. An empty podSelector selects all pods 
+in the namespace.
+
+
+
+
+
 
 
 
