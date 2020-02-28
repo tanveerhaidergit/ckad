@@ -76,41 +76,43 @@ Each container in a pod can be configured with its own readiness probe, and the 
 hitting an HTTP endpoint (httpGet)
 checking for a listening TCP port (tcpSocket)
 executing a custom script that exits 0 on success (exec: command: - command - argument)
-spec:
-  containers:
-  - name: app
-    readinessProbe:
-      httpGet:
-        path: /api/ready
-        port: 8080
-      initialDelaySeconds: 10
-      periodSeconds: 5
-      failureThreshold: 8
+
+
+spec:   
+  containers:  
+  - name: app   
+    readinessProbe:  
+      httpGet:  
+        path: /api/ready  
+        port: 8080  
+      initialDelaySeconds: 10  
+      periodSeconds: 5   
+      failureThreshold: 8  
 
 
 
-httptGet:
+httptGet:  
 
-readinessProbe:
-   httpGet:
-     path: /api/ready
-     port: 8080
+readinessProbe:  
+   httpGet:  
+     path: /api/ready  
+     port: 8080  
 
 
 TCP test:
 
-readinessProbe:
- tcpSocket:
-    port: 3306
+readinessProbe:  
+ tcpSocket:   
+    port: 3306  
 
 
 Exec command
 
-readinessProbe:
- exec:
-   command: 
-      - cat
-      -  /app/ls
+readinessProbe:  
+ exec:     
+   command:   
+      - cat  
+      -  /app/ls  
 
 
 
@@ -120,24 +122,24 @@ check a container's status. Configuration options are the same as readinessProbe
 
 Define a liveness command
 
-livenessProbe:
-      exec:
-        command:
-        - cat
-        - /tmp/healthy
-      initialDelaySeconds: 5
-      periodSeconds: 5
+livenessProbe:   
+      exec:  
+        command:  
+        - cat  
+        - /tmp/healthy  
+      initialDelaySeconds: 5  
+      periodSeconds: 5  
 
 
-livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 8080
-        httpHeaders:
-        - name: Custom-Header
-          value: Awesome
-      initialDelaySeconds: 3
-      periodSeconds: 3
+livenessProbe:      
+      httpGet:  
+        path: /healthz  
+        port: 8080  
+        httpHeaders:  
+        - name: Custom-Header  
+          value: Awesome  
+      initialDelaySeconds: 3  
+      periodSeconds: 3  
 
 
 
@@ -149,19 +151,19 @@ https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/
 To limit the access to the nginx service so that only Pods with the label access: true can query it, create a NetworkPolicy 
 object as follow
 
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: access-nginx
-spec:
-  podSelector:
-    matchLabels:
-      app: nginx
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          access: "true"
+apiVersion: networking.k8s.io/v1 </br>
+kind: NetworkPolicy </br>
+metadata: </br>
+  name: access-nginx </br>
+spec:  </br>
+  podSelector: </br>
+    matchLabels: </br>
+      app: nginx </br>
+  ingress: </br>
+  - from:  </br>
+    - podSelector: </br>
+        matchLabels: </br>
+          access: "true" </br>
 
 
 NetworkPolicy includes a podSelector which selects the grouping of Pods to which the policy applies. You can see this policy selects Pods 
