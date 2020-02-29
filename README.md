@@ -82,18 +82,7 @@ checking for a listening TCP port (tcpSocket)
 executing a custom script that exits 0 on success (exec: command: - command - argument)
 
 
-spec:   
-  containers:  
-  - name: app   
-    readinessProbe:  
-      httpGet:  
-        path: /api/ready  
-        port: 8080  
-      initialDelaySeconds: 10  
-      periodSeconds: 5   
-      failureThreshold: 8  
-
-
+```
 
 httptGet:  
 
