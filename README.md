@@ -58,6 +58,10 @@ ports:
 
 k apply -f webapp-service.yml
 
+Q. create a service messaging-service to expose the redis deployment in the marketing namespace within the cluster on port 6379
+
+k expose deployment redis --port=6379 --name=messaging=service --namespace marketing
+
 
 ## Run command to create differrent kubernetes objects
 
@@ -151,22 +155,22 @@ https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/
 To limit the access to the nginx service so that only Pods with the label access: true can query it, create a NetworkPolicy 
 object as follow
 
-apiVersion: networking.k8s.io/v1 </br>
-kind: NetworkPolicy </br>
-metadata: </br>
-  name: access-nginx </br>
-spec:  </br>
-  podSelector: </br>
-    matchLabels: </br>
-      app: nginx </br>
-  ingress: </br>
-  - from:  </br>
-    - podSelector: </br>
-        matchLabels: </br>
-          access: "true" </br>
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy 
+metadata: 
+  name: access-nginx 
+spec:  
+  podSelector: 
+    matchLabels: 
+      app: nginx 
+  ingress: 
+  - from:  
+    - podSelector: 
+        matchLabels: 
+          access: "true" 
+          
 
-
-NetworkPolicy includes a podSelector which selects the grouping of Pods to which the policy applies. You can see this policy selects Pods 
+          NetworkPolicy includes a podSelector which selects the grouping of Pods to which the policy applies. You can see this policy selects Pods 
 with the label app=nginx. The label was automatically added to the Pod in the nginx Deployment. An empty podSelector selects all pods 
 in the namespace.
 
